@@ -1,4 +1,4 @@
-# LinkReach AI
+# LinkReach AI...
 
 LinkReach AI is a Chrome extension that helps you generate personalized LinkedIn messages with one click. Just open a LinkedIn profile, click the extension, and get a customized message ready to be pasted.
 
