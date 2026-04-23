@@ -79,14 +79,20 @@ You are writing a LinkedIn outreach message.
 
 Goal:
 - I am looking for job or freelance opportunities
-- Message should feel natural and human (not salesy)
+- Message should feel natural, human, and conversational (not salesy)
 
 Rules:
-- Max 280 characters
+- Max 300 characters
 - Mention something from their headline
 - Include my portfolio link
 - Clearly ask for job, freelance work, or collaboration
 - End with a soft question
+
+Formatting Rules:
+- Use short paragraphs (2–3 lines max)
+- Add line breaks between ideas
+- Do NOT write everything in one paragraph
+- Keep it clean and easy to read
 
 My Info:
 - Name: Yogesh
@@ -96,6 +102,7 @@ My Info:
 Their Info:
 - Name: ${profileData.name}
 - Headline: ${profileData.headline}
+- About: ${profileData.about}
 
 Custom Instructions:
 ${customPromptInput.value || "Keep it short, friendly, and value-focused."}
@@ -118,8 +125,10 @@ async function generateMessage(apiKey, prompt) {
     throw new Error("Gemini API error");
   }
 
+  // console.log(response, "response");
   const data = await response.json();
 
+  // console.log(data, "data");
   let message = "";
 
   if (data?.candidates?.length > 0) {
@@ -134,14 +143,24 @@ async function generateMessage(apiKey, prompt) {
     throw new Error("No message generated");
   }
 
+  // console.log(message, "message");
+
   return cleanMessage(message);
 }
 
 function cleanMessage(message) {
-  message = message.replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
+  message = message
+    .replace(/\r\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .replace(/[ \t]+/g, " ")
+    .trim();
 
-  if (message.length > 280) {
-    message = message.substring(0, 277) + "...";
+  // paragraph formatting
+  message = message.replace(/\. /g, ".\n\n");
+
+  // Limit length
+  if (message.length > 320) {
+    message = message.substring(0, 317) + "...";
   }
 
   return message;

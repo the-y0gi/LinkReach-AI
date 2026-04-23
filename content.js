@@ -39,15 +39,15 @@ function getProfileData() {
       about = aboutEl.innerText.trim().substring(0, 800);
     }
   } catch (err) {
-    console.error("❌ Extraction error:", err);
+    console.error(" Extraction error:", err);
   }
 
-  //console.log("FINAL DATA:", { name, headline, about });
+  // console.log("FINAL DATA:", { name, headline, about });
 
   return { name, headline, about };
 }
 
-// SMART WAIT (no infinite hang)
+// WAIT (no infinite hang)
 function waitForProfileLoad(timeout = 5000) {
   return new Promise((resolve) => {
     const start = Date.now();
